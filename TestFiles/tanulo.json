@@ -1,0 +1,61 @@
+{
+  "_id": {
+    "$oid": "507f1f77bcf86cd799439011"
+  },
+  "nev": "Kovács Anna",
+  "kor": 16,
+  "osztaly": "10.B",
+  "aktiv": true,
+  "szuletesi_datum": {
+    "$date": "2010-03-14T00:00:00Z"
+  },
+  "beiratkozva": {
+    "$date": "2024-09-02T08:00:00Z"
+  },
+  "diakigazolvany_szam": 7012345678,
+  "tanulmanyi_atlag": 3.8,
+  "email": "kovacs.anna@pelda.hu",
+  "cim": {
+    "varos": "Miskolc",
+    "utca": "Széchenyi István út 12.",
+    "iranyitoszam": "3525"
+  },
+  "jegyek": {
+    "matematika": [
+      4,
+      3,
+      4,
+      5
+    ],
+    "magyar": [
+      4,
+      4,
+      3
+    ],
+    "tortenelem": [
+      5,
+      4,
+      4
+    ],
+    "angol": [
+      4,
+      5,
+      5,
+      4
+    ],
+    "biologia": [
+      3,
+      4,
+      4
+    ]
+  },
+  "kedvenc_targyak": [
+    "angol",
+    "biologia"
+  ],
+  "kulontevekenysegek": [
+    "kosárlabda",
+    "rajzkör"
+  ],
+  "szuloi_telefon": null
+}
