@@ -1,29 +1,43 @@
+mod config;
 mod connection;
-mod converter;
-mod insert;
+mod error;
+mod model;
+mod repo;
+mod seed;
 
-use insert::sample_student;
-use std::error::Error;
-use mongodb::bson::doc;
-use mongodb::Collection;
-use crate::insert::Student;
+use crate::{config::Config, repo::StudentRepo};
 
 #[tokio::main]
-async fn main() -> Result<(), Box<dyn Error>> {
-    let _convert_bson_to_json = converter::bson_to_json()?;
-    let _convert_json_to_vector = converter::json_to_vector()?;
-    let _convert_bson_to_vector = converter::bson_to_vector()?;
-    let client = connection::conncetion_to_mongodb().await?;
-    let status = insert::insert_student(&client, &sample_student()?).await?;
-    println!("Status: {status}");
-    let coll: Collection<Student> = client.database("School").collection("students_imported");
-    println!("Dokumentumok száma: {}", coll.count_documents(doc! {}).await?);
+async fn main() -> color_eyre::Result<()> {
+    color_eyre::install()?;
+
+    let config = Config::from_env();
+    println!("Connecting {}", config.uri);
+
+    let client = connection::connect(&config).await?;
+
+    let repo = StudentRepo::new(&client, &config);
+
+    if std::env::args().nth(1).as_deref() == Some("seed") {
+        let reply = repo.insert_many(seed::sample_students()?).await?;
+        println!("{} -> {} student inserted", reply.status, reply.body);
+    }
+
+    let reply = repo.count().await?;
+    println!(
+        "{} -> {} Student already in the database",
+        reply.status, reply.body
+    );
 
     Ok(())
 
-    // üzenet továbbítása socketre	to_writer vagy to_vec
+    // TODO:
+    // NOTE:
+    //  üzenet továbbítása socketre	to_writer vagy to_vec
+
     // csomagméret mérése / tömörítés	to_vec
     // transzparens módosítás (pl. mező átírása) serde_json::Value / bson::Document
     // debug logolás to_string
     // zlibcompression mongodb tárolási tömörítés
+    // külön mappába mehet majd /Programs/
 }

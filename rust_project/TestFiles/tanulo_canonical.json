@@ -1,0 +1,105 @@
+{
+  "_id": {
+    "$oid": "507f1f77bcf86cd799439011"
+  },
+  "nev": "Kovács Anna",
+  "kor": {
+    "$numberInt": "16"
+  },
+  "osztaly": "10.B",
+  "aktiv": true,
+  "szuletesi_datum": {
+    "$date": {
+      "$numberLong": "1268524800000"
+    }
+  },
+  "beiratkozva": {
+    "$date": {
+      "$numberLong": "1725264000000"
+    }
+  },
+  "diakigazolvany_szam": {
+    "$numberLong": "7012345678"
+  },
+  "tanulmanyi_atlag": {
+    "$numberDouble": "3.8"
+  },
+  "email": "kovacs.anna@pelda.hu",
+  "cim": {
+    "varos": "Miskolc",
+    "utca": "Széchenyi István út 12.",
+    "iranyitoszam": "3525"
+  },
+  "jegyek": {
+    "matematika": [
+      {
+        "$numberInt": "4"
+      },
+      {
+        "$numberInt": "3"
+      },
+      {
+        "$numberInt": "4"
+      },
+      {
+        "$numberInt": "5"
+      }
+    ],
+    "magyar": [
+      {
+        "$numberInt": "4"
+      },
+      {
+        "$numberInt": "4"
+      },
+      {
+        "$numberInt": "3"
+      }
+    ],
+    "tortenelem": [
+      {
+        "$numberInt": "5"
+      },
+      {
+        "$numberInt": "4"
+      },
+      {
+        "$numberInt": "4"
+      }
+    ],
+    "angol": [
+      {
+        "$numberInt": "4"
+      },
+      {
+        "$numberInt": "5"
+      },
+      {
+        "$numberInt": "5"
+      },
+      {
+        "$numberInt": "4"
+      }
+    ],
+    "biologia": [
+      {
+        "$numberInt": "3"
+      },
+      {
+        "$numberInt": "4"
+      },
+      {
+        "$numberInt": "4"
+      }
+    ]
+  },
+  "kedvenc_targyak": [
+    "angol",
+    "biologia"
+  ],
+  "kulontevekenysegek": [
+    "kosárlabda",
+    "rajzkör"
+  ],
+  "szuloi_telefon": null
+}

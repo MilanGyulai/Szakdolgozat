@@ -1,0 +1,114 @@
+[{
+  "_id": {
+    "$oid": "6acf7bab2684ca57b39e5ddf"
+  },
+  "name": "Kovács Anna",
+  "phone_number": null,
+  "class": "10.B",
+  "born_in": "Miskolc",
+  "born_date": {
+    "$date": "2010-03-14T00:00:00.000Z"
+  },
+  "is_active": true,
+  "is_enrolled": {
+    "$date": "2024-09-02T08:00:00.000Z"
+  },
+  "address": {
+    "city": "Miskolc",
+    "street": "Széchenyi István út 12.",
+    "zip_code": "3525"
+  },
+  "student_number": {
+    "$numberLong": "7012345678"
+  },
+  "email": "kovacs.anna@pelda.hu",
+  "math_grades": [
+    4,
+    3,
+    4,
+    5
+  ],
+  "biology_grades": [
+    3,
+    4,
+    4
+  ],
+  "age": 16,
+  "gpa": 3.8
+},
+{
+  "_id": {
+    "$oid": "6acf7bab2684ca57b39e5de0"
+  },
+  "name": "Nagy Péter",
+  "phone_number": "+36301234567",
+  "class": "11.A",
+  "born_in": "Budapest",
+  "born_date": {
+    "$date": "2009-07-21T00:00:00.000Z"
+  },
+  "is_active": true,
+  "is_enrolled": {
+    "$date": "2023-09-01T08:00:00.000Z"
+  },
+  "address": {
+    "city": "Miskolc",
+    "street": "Egyetemváros A/2",
+    "zip_code": "3515"
+  },
+  "student_number": {
+    "$numberLong": "7098765432"
+  },
+  "email": "nagy.peter@pelda.hu",
+  "math_grades": [
+    5,
+    5,
+    4,
+    5
+  ],
+  "biology_grades": [
+    4,
+    5,
+    5
+  ],
+  "age": 17,
+  "gpa": 4.6
+},
+{
+  "_id": {
+    "$oid": "6acf7bab2684ca57b39e5de1"
+  },
+  "name": "Szabó Eszter",
+  "phone_number": null,
+  "class": "9.C",
+  "born_in": "Debrecen",
+  "born_date": {
+    "$date": "2011-11-05T00:00:00.000Z"
+  },
+  "is_active": false,
+  "is_enrolled": {
+    "$date": "2025-09-01T08:00:00.000Z"
+  },
+  "address": {
+    "city": "Miskolc",
+    "street": "Kossuth Lajos utca 8.",
+    "zip_code": "3530"
+  },
+  "student_number": {
+    "$numberLong": "7055443322"
+  },
+  "email": "szabo.eszter@pelda.hu",
+  "math_grades": [
+    3,
+    4,
+    3
+  ],
+  "biology_grades": [
+    5,
+    4,
+    4,
+    5
+  ],
+  "age": 15,
+  "gpa": 4.1
+}]

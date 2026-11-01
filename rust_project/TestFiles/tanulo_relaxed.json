@@ -1,0 +1,36 @@
+{
+  "_id": {
+    "$oid": "6acf7bab2684ca57b39e5ddc"
+  },
+  "name": "Kovács Anna",
+  "phone_number": null,
+  "class": "10.B",
+  "born_in": "Miskolc",
+  "born_date": {
+    "$date": "2010-03-14T00:00:00Z"
+  },
+  "is_active": true,
+  "is_enrolled": {
+    "$date": "2024-09-02T08:00:00Z"
+  },
+  "address": {
+    "city": "Miskolc",
+    "street": "Széchenyi István út 12.",
+    "zip_code": "3525"
+  },
+  "student_number": 7012345678,
+  "email": "kovacs.anna@pelda.hu",
+  "math_grades": [
+    4,
+    3,
+    4,
+    5
+  ],
+  "biology_grades": [
+    3,
+    4,
+    4
+  ],
+  "age": 16,
+  "gpa": 3.8
+}

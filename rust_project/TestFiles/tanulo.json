@@ -21,41 +21,13 @@
     "iranyitoszam": "3525"
   },
   "jegyek": {
-    "matematika": [
-      4,
-      3,
-      4,
-      5
-    ],
-    "magyar": [
-      4,
-      4,
-      3
-    ],
-    "tortenelem": [
-      5,
-      4,
-      4
-    ],
-    "angol": [
-      4,
-      5,
-      5,
-      4
-    ],
-    "biologia": [
-      3,
-      4,
-      4
-    ]
+    "matematika": [4, 3, 4, 5],
+    "magyar": [4, 4, 3],
+    "tortenelem": [5, 4, 4],
+    "angol": [4, 5, 5, 4],
+    "biologia": [3, 4, 4]
   },
-  "kedvenc_targyak": [
-    "angol",
-    "biologia"
-  ],
-  "kulontevekenysegek": [
-    "kosárlabda",
-    "rajzkör"
-  ],
+  "kedvenc_targyak": ["angol", "biologia"],
+  "kulontevekenysegek": ["kosárlabda", "rajzkör"],
   "szuloi_telefon": null
 }
