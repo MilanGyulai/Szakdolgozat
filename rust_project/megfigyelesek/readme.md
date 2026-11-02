@@ -32,6 +32,3 @@ Ez abban az esetben történik meg, ha a tartalmazza a .bson fájlt amit át sze
 - tömörítésre milyen opciók vannak
 - snifferként egy rust alkalmazást
 - megnézni milyen módszerekkel lehet mérni az adatokat
-
-///snifferhez:
-érdemes előbb **libpcap** vagy **pcap**, majd ezt megnézni low-level-el mint például **eBPF** vagy akár legalacsonyabb szinten **ftrace**(LINUX), **ETW**(WINDOWS)

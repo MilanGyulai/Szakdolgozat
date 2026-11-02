@@ -1,4 +1,7 @@
-use mongodb::{Client, Collection, bson::doc};
+use mongodb::{
+    Client, Collection,
+    bson::{doc, oid::ObjectId},
+};
 
 use crate::{
     config::Config,
@@ -18,6 +21,21 @@ impl StudentRepo {
         }
     }
 
+    pub async fn delete_by_id(&self, id: ObjectId) -> Result<bool, AppError> {
+        let result = self.collection.delete_one(doc! {"_id": id}).await?;
+        Ok(result.deleted_count == 1)
+    }
+
+    pub async fn find_by_id(&self, id: ObjectId) -> Result<Option<Student>, AppError> {
+        let student = self.collection.find_one(doc! {"_id": id}).await?;
+        Ok(student)
+    }
+
+    pub async fn insert_one(&self, students: &Student) -> Result<(), AppError> {
+        self.collection.insert_one(students).await?;
+        Ok(())
+    }
+
     pub async fn insert_many(&self, students: Vec<Student>) -> AppResult<usize> {
         if students.is_empty() {
             return Err(AppError::Validation("Empty list".into()));
@@ -26,8 +44,8 @@ impl StudentRepo {
         Ok(Reply::created(result.inserted_ids.len()))
     }
 
-    pub async fn count(&self) -> AppResult<u64> {
-        let n = self.collection.count_documents(doc! {}).await?;
-        Ok(Reply::ok(n))
+    pub async fn count(&self) -> Result<u64, AppError> {
+        let count = self.collection.count_documents(doc! {}).await?;
+        Ok(count)
     }
 }

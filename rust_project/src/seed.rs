@@ -2,7 +2,7 @@ use bson::{DateTime, oid::ObjectId};
 
 use crate::{
     error::AppError,
-    model::{Address, Grades, Student},
+    model::{Address, Grades, NewStudent, Student},
 };
 
 pub fn sample_students() -> Result<Vec<Student>, AppError> {
@@ -74,4 +74,23 @@ pub fn sample_students() -> Result<Vec<Student>, AppError> {
     }
 
     Ok(students)
+}
+
+pub fn sample_new_student() -> Result<NewStudent, AppError> {
+    Ok(NewStudent {
+        name: "Horváth Márk".into(),
+        phone_number: Some("+36201112233".into()),
+        class: "10.A".into(),
+        born_in: "Eger".into(),
+        born_date: DateTime::parse_rfc3339_str("2010-05-30T00:00:00Z")?,
+        address: Address {
+            city: "Miskolc".into(),
+            street: "Bajcsy-Zsilinszky utca 5.".into(),
+            zip_code: "3526".into(),
+        },
+        student_number: 7_011_223_344,
+        email: "horvath.mark@pelda.hu".into(),
+        math_grades: Grades(vec![5, 4, 5]),
+        biology_grades: Grades(vec![4, 4]),
+    })
 }
