@@ -12,7 +12,7 @@ fn lock() -> MutexGuard<'static, ()> {
 
 #[test]
 fn print_folder_contents_to_terminal() {
-    let entries = fs::read_dir("./TestFiles/.").expect("The folder is completly empty");
+    let entries = fs::read_dir("../BSON_and_JSON_files/.").expect("The folder is completly empty");
 
     println!("\n Folder contents: ");
 
@@ -32,7 +32,7 @@ fn print_folder_contents_to_terminal() {
 #[test]
 fn test_tanulo_bson_open_and_read() -> Result<(), Box<dyn Error>> {
     let _lock = lock();
-    let file = File::open("./TestFiles/tanulo.bson").map_err(|e| {
+    let file = File::open("../BSON_and_JSON_files/tanulo.bson").map_err(|e| {
         format!(
             "tanulo.bson could not be opened (working directory: {:?}): {e}",
             std::env::current_dir()

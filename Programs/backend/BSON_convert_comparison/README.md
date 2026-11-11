@@ -15,6 +15,14 @@ A MongoDB-be beimportáltam ugyanazt az értékekkel bíró dokumentumot ezután
 - A megfigyeléshez a **ImHex** nevű alkalmazást használtam ami megmutatta, hogy byte szinten hol van eltérés és utánna a két .json formátumú fájlban könnyen meg lehetett keresni a különbséget.
 - Byte szintű eltérést csak az ObjectId-nél volt található ami annak köszönhető, hogy idő alapú generálást használ a típus.
 
+## ImHex:
+Az ImHex programot arra használtam, hogy a két fájlt amit a MongoDB és a Rust generált, illetve a MongoDB generált és a Rust konvertált,
+behelyeztem és egymás mellé tettem őket, hogy megnézzem byte szinten milyen különbségek vannak köztük. 
+Az alkalmazás képes a szintax-highlight-ra és ezzel könnyen látható volt a különbség.
+
+[//]: <> (TODO: insert picture, name bson and json files correctly to see its from converting or from db, format text properly)
+
+
 ## Futtatás:
 
 ```bash

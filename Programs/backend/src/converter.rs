@@ -1,52 +1,72 @@
 //! NOT USED IN THIS VERSION
-//! Replaced by model.rs, repo.rs and seed.rs.
-use bson::DateTime;
-use bson::oid::ObjectId;
-use http::StatusCode;
-use mongodb::{Client, Collection, bson::doc};
-use serde::{Deserialize, Serialize};
+use bson::{Bson, DateTime, Document, oid::ObjectId};
+use serde_json::Value;
 use std::error::Error;
+use std::fs::File;
+use std::io::BufWriter;
 
-#[derive(Debug, Serialize, Deserialize)]
-pub struct Address {
-    pub city: String,
-    pub street: String,
-    pub zip_code: String,
+use crate::insert::Address;
+use crate::insert::Grades;
+use crate::insert::Student;
+
+pub fn read_all_docs(path: &str) -> Result<Vec<Document>> {
+    let mut reader = BufReader::new(File::open(path)?);
+    let mut docs = Vec::new();
+
+    while !reader.fill_buf()?.is_empty() {
+        docs.push(Document::from_reader(&mut reader)?);
+    }
+    Ok(docs)
 }
 
-#[derive(Debug, Serialize, Deserialize)]
-pub struct Grades(pub Vec<u8>);
+pub fn bson_to_relaxed_json() -> Result<(), Box<dyn Error>> {
+    let file = File::open("./BSON_and_JSON_files/data_to_bson.bson")?;
+    let doc = Document::from_reader(file)?;
 
-#[derive(Serialize, Deserialize, Debug)]
-pub struct Student {
-    pub _id: ObjectId,
-    pub name: String,
-    pub phone_number: Option<String>,
-    pub class: String,
-    pub born_in: String,
-    pub born_date: DateTime,
-    pub is_active: bool,
-    pub is_enrolled: DateTime,
-    pub address: Address,
-    pub student_number: u64,
-    pub email: String,
-    pub math_grades: Grades,
-    pub biology_grades: Grades,
-    pub age: u8,
-    pub gpa: f64,
+    let value = Bson::Document(doc).into_relaxed_extjson();
+
+    let out = BufWriter::new(File::create("./BSON_and_JSON_files/tanulo_relaxed.json")?);
+    serde_json::to_writer_pretty(out, &value)?;
+    Ok(())
 }
 
-pub async fn insert_student(
-    client: &Client,
-    student: Vec<Student>,
-) -> Result<http::StatusCode, mongodb::error::Error> {
-    let collection: Collection<Student> = client.database("School").collection("students_imported");
-    collection.insert_many(student).await?;
-    Ok(StatusCode::CREATED)
+pub fn bson_to_canonical_json() -> Result<(), Box<dyn Error>> {
+    let file = File::open("./BSON_and_JSON_files/tanulo.bson")?;
+    let doc = Document::from_reader(file)?;
+
+    let value = Bson::Document(doc).into_canonical_extjson();
+
+    let out = BufWriter::new(File::create("./BSON_and_JSON_files/tanulo_canonical.json")?);
+    serde_json::to_writer_pretty(out, &value)?;
+    Ok(())
 }
 
-pub fn sample_student() -> Result<Vec<Student>, Box<dyn Error>> {
-    Ok(vec![
+pub fn bson_to_vector() -> Result<Vec<u8>, Box<dyn Error>> {
+    let doc = Document::from_reader(File::open("./BSON_and_JSON_files/tanulo.bson")?)?;
+
+    let mut bytes: Vec<u8> = Vec::new();
+    doc.to_writer(&mut bytes)?;
+
+    let out = BufWriter::new(File::create("./BSON_and_JSON_files/tanulo_byte_bson.txt")?);
+    serde_json::to_writer_pretty(out, &bytes)?;
+
+    Ok(bytes)
+}
+
+pub fn json_to_vector() -> Result<Vec<u8>, Box<dyn Error>> {
+    let file = File::open("./BSON_and_JSON_files/tanulo.json")?;
+    let doc: Value = serde_json::from_reader(file)?;
+
+    let bytes = serde_json::to_vec(&doc)?;
+
+    let out = BufWriter::new(File::create("./BSON_and_JSON_files/tanulo_byte_json.txt")?);
+    serde_json::to_writer_pretty(out, &bytes)?;
+
+    Ok(bytes)
+}
+
+pub fn data_to_bson() -> Result<Vec<Student>, Box<dyn Error>> {
+    let students = vec![
         Student {
             _id: ObjectId::new(),
             name: "Kovács Anna".into(),
@@ -110,5 +130,15 @@ pub fn sample_student() -> Result<Vec<Student>, Box<dyn Error>> {
             age: 15,
             gpa: 4.1,
         },
-    ])
+    ];
+
+    let mut out = BufWriter::new(File::create("./BSON_and_JSON_files/data_to_bson.bson")?);
+
+    for students in &students {
+        let doc = bson::serialize_to_document(students)?;
+        doc.to_writer(&mut out)?;
+    }
+    println!("Bson from data was created!");
+
+    Ok(students)
 }

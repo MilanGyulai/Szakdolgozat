@@ -1,6 +1,9 @@
-use bson::{DateTime, oid::ObjectId};
+use std::str::FromStr;
+use bson::{DateTime, oid::ObjectId, Document};
 use chrono::{NaiveDate, Utc};
 use serde::{Deserialize, Serialize};
+use error::AppError;
+use crate::error;
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Address {
@@ -16,6 +19,62 @@ pub struct Grades(pub Vec<u8>);
 impl Grades {
     pub fn is_valid(&self) -> bool {
         self.0.iter().all(|grade| (1..=5).contains(grade))
+    }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum Subject {
+    Math,
+    Biology,
+}
+
+impl Subject {
+    /// The field name in the database.
+    pub fn field(self) -> &'static str {
+        match self {
+            Subject::Math => "math_grades",
+            Subject::Biology => "biology_grades",
+        }
+    }
+}
+
+impl FromStr for Subject {
+    type Err = AppError;
+
+    fn from_str(text: &str) -> Result<Self, Self::Err> {
+        match text.to_lowercase().as_str() {
+            "math" => Ok(Subject::Math),
+            "biology" => Ok(Subject::Biology),
+            other => Err(AppError::Validation(format!("unknown subject: {other}"))),
+        }
+    }
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize)]
+pub struct StudentPatch {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub name: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub phone_number: Option<Option<String>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub class: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub born_in: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub is_active: Option<bool>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub address: Option<Address>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub email: Option<String>,
+}
+
+impl StudentPatch {
+    pub fn is_empty(&self) -> bool {
+        *self == Self::default()
+    }
+
+    pub fn to_set_document(&self) -> Result<Document, AppError> {
+        Ok(bson::serialize_to_document(self)?)
     }
 }
 
@@ -59,12 +118,14 @@ impl Student {
         self.gpa = self.compute_gpa();
     }
 
+    #[expect(dead_code, reason = "TODO")]
     pub fn age_on(&self, today: NaiveDate) -> Option<u32> {
-        let born = chrono::DateTime::from_timestamp_millis(self.born_date.timestamp_millis())?
-            .date_naive();
+        let millis = self.born_date.timestamp_millis();
+        let born = chrono::DateTime::from_timestamp_millis(millis)?.date_naive();
         today.years_since(born)
     }
 
+    #[expect(dead_code, reason = "TODO")]
     pub fn age(&self) -> Option<u32> {
         self.age_on(Utc::now().date_naive())
     }
