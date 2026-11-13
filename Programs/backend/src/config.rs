@@ -13,7 +13,7 @@ impl Config {
         Self {
             uri: env_or(
                 "MONGODB_URI",
-                "mongodb://localhost:27017/?directConnection=true",
+                "mongodb://127.0.0.1:27018/?directConnection=true",
             ),
             database: env_or("MONGODB_DB", "School"),
             collection: env_or("MONGODB_COLLECTION", "students_imported"),
